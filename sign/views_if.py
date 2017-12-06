@@ -12,7 +12,7 @@ def add_event(request):
     limit=request.POST.get('limit','')
     status=request.POST.get('status','')
     address=request.POST.get('address','')
-    start_time=request.POST.get('start','')
+    start_time=request.POST.get('start_time','')
     if eid==''or name =='' or limit =='' or address == '' or start_time== '':
         return JsonResponse({'status':10021,'message':'parameter error'})
 
@@ -77,7 +77,7 @@ def add_guest(request):
     email=request.POST.get('email','')
     if eid=='' or realname=='' or phone=='':
         return JsonResponse({'status':10021,'message':'parameter error'})
-    result= Event.objects.fillter(id=eid)
+    result= Event.objects.filter(id=eid)
     if not result:
         return JsonResponse({'status':10022,'message':'event id null'})
 
@@ -91,7 +91,9 @@ def add_guest(request):
         return JsonResponse({'status':10024,'message':'event number is full'})
 
     event_time =Event.objects.get(id=eid).start_time
-    etime=str(event_time).split('.')[0]
+    #print(event_time)
+    etime=str(event_time).split('+')[0]
+    #print(etime)
     timeArray=time.strptime(etime,"%Y-%m-%d %H:%M:%S")
     e_time=int(time.mktime(timeArray))
 
@@ -157,7 +159,7 @@ def user_sign(request):
         return JsonResponse({'status':10023,'message':'event status is not available'})
 
     event_time=Event.objects.get(id=eid).start_time
-    etime=str(event_time).split('.')[0]
+    etime=str(event_time).split('+')[0]
     timeArray=time.strptime(etime,'%Y-%m-%d %H:%M:%S')
     e_time=int(time.mktime(timeArray))
 
