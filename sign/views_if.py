@@ -94,6 +94,7 @@ def add_guest(request):
     #print(event_time)
     etime=str(event_time).split('+')[0]
     #print(etime)
+
     timeArray=time.strptime(etime,"%Y-%m-%d %H:%M:%S")
     e_time=int(time.mktime(timeArray))
 
