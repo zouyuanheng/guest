@@ -16,11 +16,11 @@ def add_event(request):
     if eid==''or name =='' or limit =='' or address == '' or start_time== '':
         return JsonResponse({'status':10021,'message':'parameter error'})
 
-    result= Event.objects.fillter(id=eid)
+    result= Event.objects.filter(id=eid)
     if result:
         return  JsonResponse({'status':10022,'message':'event id already exists'})
 
-    result=Event.objects.fillter(name=name)
+    result=Event.objects.filter(name=name)
     if result:
         return JsonResponse({'status':10023,'message':'event name already exists'})
     if  status == '':
