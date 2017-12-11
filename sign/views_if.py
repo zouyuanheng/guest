@@ -55,7 +55,7 @@ def get_event_list(request):
 
     if name!='':
         datas=[]
-        results= Event.objects.fillter(name__contains=name)
+        results= Event.objects.filter(name__contains=name)
         if results:
             for r in results:
                 event={}
@@ -121,7 +121,7 @@ def get_guest_list(request):
 
     if eid!='' and phone=='':
         datas=[]
-        results=Guest.objects.filter(phone__contains=phone)
+        results=Guest.objects.filter(event_id=eid)
         if results:
             for r in results:
                 guest={}
@@ -130,9 +130,9 @@ def get_guest_list(request):
                 guest['email']=r.email
                 guest['sign']=r.sign
                 datas.append(guest)
-                return JsonResponse({'status':200,'message':'success','data':datas})
-            else:
-                return JsonResponse({'status':10022,'message':'query result is empty'})
+            return JsonResponse({'status':200,'message':'success','data':datas})
+        else:
+            return JsonResponse({'status':10022,'message':'query result is empty'})
     if eid!=''and phone!='':
         guest={}
         try:
