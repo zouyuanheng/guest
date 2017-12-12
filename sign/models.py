@@ -1,7 +1,8 @@
 #coding=utf-8
 from __future__ import unicode_literals
-
+import django.utils.timezone as timezone
 from django.db import models
+import datetime
 
 # Create your models here.
 
@@ -13,7 +14,7 @@ class Event(models.Model):
     start_time=models.DateTimeField('event time')
     creat_time=models.DateTimeField(auto_now=True)
 
-    def  __unicode__(self):
+    def  __str__(self):
         return self.name
 
 
@@ -26,5 +27,9 @@ class Guest(models.Model):
     creat_time=models.DateTimeField(auto_now=True)
     class Meta:
         unique_together=("event","phone")
-    def __unicode__(self):
+    def __str__(self):
         return self.realname
+
+# 修改创建时间类型
+#ALTER TABLE  `sign_event` CHANGE  `creat_time`  `creat_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+#ALTER TABLE  `sign_guest` CHANGE  `creat_time`  `creat_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
